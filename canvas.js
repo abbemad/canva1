@@ -89,9 +89,19 @@ function Circle(x, y, dx, dy, radius){
     
         this.x += this.dx;
         this.y += this.dy;
+
         // als muis aanraakt increased grote circle
-        if (mouse.x - this.x < 80) {
-            this.radius += 1;
+        if (mouse.x - this.x < 80 
+            && mouse.x - this.x > -80 
+            && mouse.y - this.y < 80 
+            && mouse.y - this.y > -80) {
+            
+                this.radius += 1;
+
+        }
+        // this radius verstellen van grote circle auto shrink
+        else if (this.radius > 20){
+            this.radius -= 1;
         }
 
         this.draw();
