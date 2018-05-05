@@ -83,6 +83,20 @@ function Circle(x, y, dx, dy, radius){
     }
 }
 
+var circleArray = [];
+
+for (var i = 0; i < 100; i++){
+
+    var x = Math.random() * innerWidth;
+    var y = Math.random() * innerHeight; 
+    var dx = (Math.random() - 0.5) * 50 ;
+    var dy = (Math.random() - 0.5) * 50 ;
+    var radius = 30;
+
+    circleArray.push(new Circle(x, y, dx, dy, radius));
+
+}
+
 
 var circle = new Circle(200,200, 3, 3, 30);
 circle.draw();
@@ -91,7 +105,10 @@ function animation() {
     requestAnimationFrame(animation);
     c.clearRect(0, 0, innerWidth, innerHeight);
 
-    circle.update();
+    for (var i = 0; i < circleArray.length; i++){
+        circleArray[i].update();
+    }
+
 
 }
 
