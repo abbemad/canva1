@@ -49,6 +49,17 @@ var c = canvas.getContext('2d');
 
 // var radius = 30;
 
+var mouse ={
+    x: undefined,
+    y: undefined
+}
+
+window.addEventListener('mousemove', function(event){
+    mouse.x = event.x;
+    mouse.y = event.y;
+    console.log(mouse);
+})
+
 function Circle(x, y, dx, dy, radius){
 
     this.x = x;
@@ -78,6 +89,10 @@ function Circle(x, y, dx, dy, radius){
     
         this.x += this.dx;
         this.y += this.dy;
+        // als muis aanraakt increased grote circle
+        if (mouse.x - this.x < 80) {
+            this.radius += 1;
+        }
 
         this.draw();
     }
@@ -85,11 +100,11 @@ function Circle(x, y, dx, dy, radius){
 
 var circleArray = [];
 
-for (var i = 0; i < 100; i++){
+for (var i = 0; i < 10; i++){
     var radius = 30;
 
     // spawn in screen
-    
+
     var x = Math.random() * (innerWidth - radius * 2) + radius;
     var y = Math.random() * (innerHeight - radius * 2) + radius; 
     var dx = (Math.random() - 0.5) * 50 ;
