@@ -86,12 +86,15 @@ function Circle(x, y, dx, dy, radius){
 var circleArray = [];
 
 for (var i = 0; i < 100; i++){
+    var radius = 30;
 
-    var x = Math.random() * innerWidth;
-    var y = Math.random() * innerHeight; 
+    // spawn in screen
+    
+    var x = Math.random() * (innerWidth - radius * 2) + radius;
+    var y = Math.random() * (innerHeight - radius * 2) + radius; 
     var dx = (Math.random() - 0.5) * 50 ;
     var dy = (Math.random() - 0.5) * 50 ;
-    var radius = 30;
+    
 
     circleArray.push(new Circle(x, y, dx, dy, radius));
 
