@@ -54,6 +54,17 @@ var mouse ={
     y: undefined
 }
 
+// max growth size
+var maxRadius = 100;
+// shrinking size 
+var minRadius = 25;
+
+//color 
+
+var colorArray = [
+    '#ff1122', 'green', 'red', 'yellow', 'purple',
+];
+
 window.addEventListener('mousemove', function(event){
     mouse.x = event.x;
     mouse.y = event.y;
@@ -70,11 +81,17 @@ function Circle(x, y, dx, dy, radius){
 
     this.radius = radius;
 
+    this.color = colorArray[Math.floor(Math.random() * colorArray.length)];
+
     this.draw = function(){
         c.beginPath();
         c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
         c.strokeStyle = 'white';
         c.stroke();
+
+        // fill random color 
+        c.fillStyle = this.color;
+        c.fill();
     }
 
     this.update = function (){
@@ -86,21 +103,22 @@ function Circle(x, y, dx, dy, radius){
             this.dy = -this.dy; 
         }
     
-    
         this.x += this.dx;
         this.y += this.dy;
 
-        // als muis aanraakt increased grote circle
+        // interactivity if the mouse touches the circles
         if (mouse.x - this.x < 80 
             && mouse.x - this.x > -80 
             && mouse.y - this.y < 80 
             && mouse.y - this.y > -80) {
             
+            if (this.radius < maxRadius){
                 this.radius += 1;
-
+                
+            }
         }
-        // this radius verstellen van grote circle auto shrink
-        else if (this.radius > 20){
+        // this radius verstellen van grote circle / auto shrink
+        else if (this.radius > minRadius){
             this.radius -= 1;
         }
 
@@ -110,21 +128,24 @@ function Circle(x, y, dx, dy, radius){
 
 var circleArray = [];
 
-for (var i = 0; i < 10; i++){
-    var radius = 30;
+// for loop for amount of circles
+for (var i = 0; i < 100; i++){
 
-    // spawn in screen
+    //speed sizing
+    var radius = 1;
 
+    // spawn circles in canvas randomly
     var x = Math.random() * (innerWidth - radius * 2) + radius;
     var y = Math.random() * (innerHeight - radius * 2) + radius; 
-    var dx = (Math.random() - 0.5) * 50 ;
-    var dy = (Math.random() - 0.5) * 50 ;
+
+    // speed of circles
+    var dx = (Math.random() - 0.5) * 1 ;
+    var dy = (Math.random() - 0.5) * 1 ;
     
 
     circleArray.push(new Circle(x, y, dx, dy, radius));
 
 }
-
 
 var circle = new Circle(200,200, 3, 3, 30);
 circle.draw();
