@@ -49,26 +49,35 @@ var c = canvas.getContext('2d');
 
 // var radius = 30;
 
-var mouse ={
+var mouse = {
     x: undefined,
     y: undefined
 }
 
 // max growth size
-var maxRadius = 100;
+var maxRadius = 30;
 // shrinking size 
 var minRadius = 25;
 
 //color 
 
 var colorArray = [
-    '#ff1122', 'green', 'red', 'yellow', 'purple',
+    '#00A6F5', '#0EFADB', '#03C8DE', '#0367DE', '#043EFA',
 ];
 
 window.addEventListener('mousemove', function(event){
     mouse.x = event.x;
     mouse.y = event.y;
     console.log(mouse);
+})
+
+
+// resizing screen so circles move 
+window.addEventListener('resize', function(){
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    init ();
 })
 
 function Circle(x, y, dx, dy, radius){
@@ -80,6 +89,7 @@ function Circle(x, y, dx, dy, radius){
     this.dy = dy;
 
     this.radius = radius;
+    this.minRadius = radius;
 
     this.color = colorArray[Math.floor(Math.random() * colorArray.length)];
 
@@ -118,7 +128,7 @@ function Circle(x, y, dx, dy, radius){
             }
         }
         // this radius verstellen van grote circle / auto shrink
-        else if (this.radius > minRadius){
+        else if (this.radius > this.minRadius){
             this.radius -= 1;
         }
 
@@ -129,10 +139,10 @@ function Circle(x, y, dx, dy, radius){
 var circleArray = [];
 
 // for loop for amount of circles
-for (var i = 0; i < 100; i++){
+for (var i = 0; i < 1000; i++){
 
-    //speed sizing
-    var radius = 1;
+    //sizing size
+    var radius = Math.random() * 3 + 1;
 
     // spawn circles in canvas randomly
     var x = Math.random() * (innerWidth - radius * 2) + radius;
@@ -150,7 +160,34 @@ for (var i = 0; i < 100; i++){
 var circle = new Circle(200,200, 3, 3, 30);
 circle.draw();
 
+
+var circleArray = [];
+
+// function init for resizing and generate circles again
+function init (){
+
+        circleArray = [];
+    for (var i = 0; i < 1000; i++){
+
+        //sizing size
+        var radius = Math.random() * 3 + 1;
+    
+        // spawn circles in canvas randomly
+        var x = Math.random() * (innerWidth - radius * 2) + radius;
+        var y = Math.random() * (innerHeight - radius * 2) + radius; 
+    
+        // speed of circles
+        var dx = (Math.random() - 0.5) * 1 ;
+        var dy = (Math.random() - 0.5) * 1 ;
+        
+    
+        circleArray.push(new Circle(x, y, dx, dy, radius));
+    }
+
+}
+
 function animation() {
+
     requestAnimationFrame(animation);
     c.clearRect(0, 0, innerWidth, innerHeight);
 
